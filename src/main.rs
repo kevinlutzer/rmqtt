@@ -1,9 +1,8 @@
 use clap::Parser;
 use cli::{Cli, Commands};
 use mqtt::{build_client, connect_client, publish, subscribe, ClientConfig};
+use std::{env::var, path::PathBuf, process::exit};
 
-#[allow(deprecated)]
-use std::{env::home_dir, process::exit};
 use tokio::main;
 
 pub mod cli;
@@ -28,12 +27,17 @@ const ERR_FAILED_COMMAND: i32 = 4;
 /// TODO - add support for Windows home directory and SNAP_COMMON in the future
 fn load_config_file() {
     // Get a path ref to the config file
-    #[allow(deprecated)]
-    let some_config_file = home_dir().map(|path| path.join(CONFIG_FILE_NAME));
+
+    let config_file_path = var("SNAP_USER_COMMON")
+        .or_else(|_| var("HOME"))
+        .map(|path| {
+            let pb = PathBuf::from(path);
+            pb.join(CONFIG_FILE_NAME)
+        });
 
     // If the config file exists, load the environment variables from it
-    if let Some(config_file) = some_config_file {
-        dotenvy::from_path(&config_file).ok();
+    if let Ok(cf) = config_file_path {
+        dotenvy::from_path(&cf).ok();
     }
 }
 
@@ -43,19 +47,19 @@ async fn main() {
 
     // Parse the CLI, ::try_parse() will return an error if the arguments are invalid or if `--help` is passed
     let cli = Cli::try_parse().unwrap_or_else(|e| {
-        eprintln!("{}", e);
+        eprintln!("{e}");
         exit(ERR_PARSING_ARGS);
     });
 
     let config = ClientConfig::new(cli.host, cli.port);
     let mut client = build_client(config).unwrap_or_else(|e| {
-        eprintln!("Error creating MQTT client: {}", e);
+        eprintln!("Error creating MQTT client: {e}");
         exit(ERR_CREATING_MQTT_CLIENT);
     });
 
     // Connect to the MQTT server
     connect_client(&client).await.unwrap_or_else(|e| {
-        eprintln!("Error connecting to MQTT server: {}", e);
+        eprintln!("Error connecting to MQTT server: {e}");
         exit(ERR_CONNECTING_MQTT_BROKER);
     });
 
@@ -69,7 +73,7 @@ async fn main() {
         Commands::Sub {} => subscribe(&mut client, topic, qos).await,
     }
     .unwrap_or_else(|cmd_err| {
-        eprintln!("{}", cmd_err);
+        eprintln!("{cmd_err}");
         exit(ERR_FAILED_COMMAND);
     });
 }
