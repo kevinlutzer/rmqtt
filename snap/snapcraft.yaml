@@ -1,3 +1,10 @@
+
+contact: https://github.com/kevinlutzer/rmqtt/issues
+issues: https://github.com/kevinlutzer/rmqtt/issues
+source-code: https://github.com/kevinlutzer/rmqtt
+license: Apache-2.0-only
+icon: snap/icons/icon.png
+
 name: rmqtt
 base: core24
 version: '0.0.1' # Updated in the pipelines
@@ -9,13 +16,19 @@ description: |
 grade: stable
 confinement: strict 
 
+plugs:
+  rmqttconfig-file:
+    interface: personal-files
+    read:
+    - $HOME/.rmqttconfig
+
 apps:
   rmqtt: 
     command: bin/rmqtt
-    plugs: [network, network-bind]
+    plugs: [network, network-bind, rmqttconfig-file]
 
 parts:
   rmqtt:
-    build-packages: [tree, libssl-dev, pkg-config, cmake, build-essential]
+    build-packages: [libssl-dev, pkg-config, cmake, build-essential]
     plugin: rust
     source: .
