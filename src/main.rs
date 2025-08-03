@@ -2,14 +2,19 @@ use clap::Parser;
 use cli::{Cli, Commands};
 use mqtt::{build_client, connect_client, publish, subscribe, ClientConfig};
 
+use std::path::PathBuf;
 #[allow(deprecated)]
-use std::{env::home_dir, process::exit};
+use std::{
+    env::{home_dir, var},
+    process::exit,
+};
 use tokio::main;
 
 pub mod cli;
 pub mod mqtt;
 
-const CONFIG_FILE_NAME: &str = ".rmqttconfig";
+const CONFIG_FILE_NAME: &str = "rmqttconfig";
+const SNAP_COMMON: &str = "SNAP_COMMON";
 
 /// Exit code when the program fails to parse the arguments. This means that the user
 /// provided invalid arguments or the arguments were not provided at all.
@@ -29,11 +34,17 @@ const ERR_FAILED_COMMAND: i32 = 4;
 fn load_config_file() {
     // Get a path ref to the config file
     #[allow(deprecated)]
-    let some_config_file = home_dir().map(|path| path.join(CONFIG_FILE_NAME));
+    let config_file_path = home_dir().map(|path| path.join(CONFIG_FILE_NAME));
 
     // If the config file exists, load the environment variables from it
-    if let Some(config_file) = some_config_file {
-        dotenvy::from_path(&config_file).ok();
+    if let Some(cf) = config_file_path {
+        dotenvy::from_path(&cf).ok();
+
+        // Not check the snap common directory
+    } else {
+        if let Ok(snap_common) = var(SNAP_COMMON) {
+            dotenvy::from_path(PathBuf::from(snap_common).join(CONFIG_FILE_NAME)).ok();
+        }
     }
 }
 

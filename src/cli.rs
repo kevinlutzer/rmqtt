@@ -15,20 +15,21 @@ pub enum QoS {
     name = "rmqtt",
     version,
     author = "Kevin Lutzer",
-    about = "Send and subscribe to MQTT messages. Supports v5 and v3.1 versions of the MQTT protocol"
+    about = "Send and subscribe to MQTT messages. Supports v5 and v3.1 versions of the MQTT protocol. 
+    Add a rmqttconfig file to your home directory or SNAP_COMMON directory (w/ the installed snap) to persist the server and port information"
 )]
 pub struct Cli {
     /// Host of the MQTT broker. This can be either a hostname or an IP address. This argument
-    /// overides the .rmqqtconfig file's MQTT_HOST setting.
+    /// overides the rmqttconfig file's MQTT_HOST setting.
     #[arg(long, env = "MQTT_HOST")]
     pub host: String,
 
     /// Port of the MQTT broker. This is usually 1883 for unencrypted connections and 8883 for TLS connections.
-    /// This argument overrides the .rmqqtconfig file's MQTT_PORT setting.
+    /// This argument overrides the rmqttconfig file's MQTT_PORT setting.
     #[arg(short, long, env = "MQTT_PORT")]
     pub port: u16,
 
-    /// Topic to publish to or subscribe from. This argument overrides the .rmqqtconfig file's MQTT_TOPIC setting.
+    /// Topic to publish to or subscribe from. This argument overrides the rmqttconfig file's MQTT_TOPIC setting.
     #[arg(long, short, env = "MQTT_TOPIC")]
     pub topic: String,
 

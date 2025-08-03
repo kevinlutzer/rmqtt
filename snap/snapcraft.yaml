@@ -1,0 +1,21 @@
+name: rmqtt
+base: core24
+version: '0.0.1' # Updated in the pipelines
+summary: A rust based MQTT client 🦀
+description: |
+  This mqtt client can subscribe and publish to MQTT topics. For more
+  information about the commands are arguments, run rmqtt --help.
+
+grade: stable
+confinement: strict 
+
+apps:
+  rmqtt: 
+    command: bin/rmqtt
+    plugs: [network, network-bind]
+
+parts:
+  rmqtt:
+    build-packages: [tree, libssl-dev, pkg-config, cmake, build-essential]
+    plugin: rust
+    source: .
