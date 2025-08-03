@@ -3,15 +3,15 @@ contact: https://github.com/kevinlutzer/rmqtt/issues
 issues: https://github.com/kevinlutzer/rmqtt/issues
 source-code: https://github.com/kevinlutzer/rmqtt
 license: Apache-2.0
-icon: snap/icons/icon.png
+icon: snap/icon/icon.png
 
 name: rmqtt
 base: core24
-version: '0.0.2' # Updated in the pipelines
+version: '0.0.3' # Updated in the pipelines
 summary: A rust based MQTT client 🦀
 description: |
-  This mqtt client can subscribe and publish to MQTT topics. For more
-  information about the commands are arguments, run rmqtt --help. Add a `.rmqttconfig`
+  A simple rust based MQTT client that can subscribe and publish to MQTT topics. For more
+  information about the avaliable commands and arguments, run rmqtt --help. Add a `.rmqttconfig`
   file to the `$HOME/rmqtt/common` directory to persist settings like the host, port,
   topic, and QoS.
 
