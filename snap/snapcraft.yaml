@@ -3,7 +3,6 @@ contact: https://github.com/kevinlutzer/rmqtt/issues
 issues: https://github.com/kevinlutzer/rmqtt/issues
 source-code: https://github.com/kevinlutzer/rmqtt
 license: Apache-2.0
-icon: snap/icon/icon.png
 
 name: rmqtt
 base: core24
