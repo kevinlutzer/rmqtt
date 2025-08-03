@@ -1,10 +1,8 @@
 use clap::Parser;
 use cli::{Cli, Commands};
 use mqtt::{build_client, connect_client, publish, subscribe, ClientConfig};
+use std::{env::var, path::PathBuf, process::exit};
 
-use std::{fs::File, io::Read, path::PathBuf};
-#[allow(deprecated)]
-use std::{env::{var, home_dir}, process::exit};
 use tokio::main;
 
 pub mod cli;
@@ -33,14 +31,13 @@ fn load_config_file() {
     let config_file_path = var("SNAP_USER_COMMON")
         .or_else(|_| var("HOME"))
         .map(|path| {
-            println!("HOME: {path}");   
             let pb = PathBuf::from(path);
-            return pb.join(CONFIG_FILE_NAME);
+            pb.join(CONFIG_FILE_NAME)
         });
 
     // If the config file exists, load the environment variables from it
     if let Ok(cf) = config_file_path {
-        dotenvy::from_path(&cf).expect("ASDASDASD");
+        dotenvy::from_path(&cf).ok();
     }
 }
 
