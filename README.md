@@ -1,7 +1,5 @@
 # RMQTT
 
-<iframe src="https://snapcraft.io/rmqtt/embedded?button=black" frameborder="0" width="100%" height="380px" style="border: 1px solid #CCC; border-radius: 2px;"></iframe>
-
 A compact rust CLI tool for publishing and subscribing to MQTT messages. The binary supports both the v5 and v3.1 versions
 of the MQTT protocol.
 
