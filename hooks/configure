@@ -1,0 +1,19 @@
+#!/bin/sh -e
+
+$FILE=$SNAP_DATA/options/.rmqttconfig
+
+HOST="$(snapctl get username)"
+PORT="$(snapctl get password)"
+TOPIC="$(snapctl get topic)"
+
+if [[ -z "$HOST" ]]; then
+    sed -i 's/^HOST=.*/HOST=$HOST/' $FILE
+fi
+
+if [[ -z "$PORT" ]]; then
+    sed -i 's/^PORT=.*/PORT=$PORT/' $FILE
+fi
+
+if [[ -z "$TOPIC" ]]; then
+    sed -i 's/^TOPIC=.*/TOPIC=$TOPIC/' $FILE
+fi

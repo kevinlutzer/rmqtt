@@ -26,4 +26,8 @@ parts:
   rmqtt:
     build-packages: [libssl-dev, pkg-config, cmake, build-essential]
     plugin: rust
-    source: .
+    source: snap-rust-content.tar.gz
+
+  hook-scripts:
+    source: snap-hook-content.tar.gz
+    plugin: dump
