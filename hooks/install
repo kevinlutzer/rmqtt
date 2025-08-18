@@ -1,5 +1,12 @@
-#!/bin/bash
+#!/bin/sh -e
+
+$FILE=$SNAP_DATA/options/.rmqttconfig
 
 # This script sets up the config file 
 # for the `rmqtt` application in SNAP_DATA.
 
+echo "HOST=" >> $FILE
+echo "PORT=" >> $FILE
+echo "TOPIC=" >> $FILE
+
+chmod 644 $FILE

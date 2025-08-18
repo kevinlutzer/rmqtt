@@ -28,12 +28,10 @@ const ERR_FAILED_COMMAND: i32 = 4;
 fn load_config_file() {
     // Get a path ref to the config file
     // If we have a SNAP_DATA file, we know we are in snap confinement
-    let config_file_path = var("SNAP_DATA")
-        .or_else(|_| var("HOME"))
-        .map(|path| {
-            let pb = PathBuf::from(path);
-            pb.join(CONFIG_FILE_NAME)
-        });
+    let config_file_path = var("SNAP_DATA").or_else(|_| var("HOME")).map(|path| {
+        let pb = PathBuf::from(path);
+        pb.join(CONFIG_FILE_NAME)
+    });
 
     // If the config file exists, load the environment variables from it
     if let Ok(cf) = config_file_path {
