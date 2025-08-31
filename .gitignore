@@ -8,3 +8,4 @@ target/
 
 # Files related to snapcraft
 *.snap
+snap-content.tar.gz
