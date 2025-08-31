@@ -30,13 +30,9 @@ jobs:
     - name: Format Check
       run: cargo fmt --check
 
+    # Verify the cargo project can be built
     - name: Build
       run: cargo build
 
-    - name: Setup Snap
-      run: |
-        just snap-package-content
-
+    # Build the snap
     - uses: snapcore/action-build@v1
-    
-
