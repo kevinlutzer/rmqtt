@@ -1,13 +1,13 @@
 [package]
 name = "rmqtt"
 version = "0.1.0"
-edition = "2021"
-rust-version = "1.81"
+edition = "2024"
+rust-version = "1.93"
 
 [dependencies]
-anyhow = "1.0.97"
-clap = { version = "4.5.36", features = ["derive", "env"] }
+anyhow = "1.0.102"
+clap = { version = "4.6.1", features = ["derive", "env"] }
 dotenvy = { version = "0.15.7", features = ["clap"] }
-futures-util = "0.3.31"
-paho-mqtt = "0.13.2"
-tokio = { version = "1.44.2", features = ["rt", "tokio-macros", "process", "full"] }
+futures-util = "0.3.32"
+paho-mqtt = "0.14.0"
+tokio = { version = "1.52.3", features = ["rt", "tokio-macros", "process", "full"] }
